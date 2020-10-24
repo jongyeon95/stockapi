@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div>
+        <p th:if="${infos.size()}==0" th:text="'잘못된 종목 코드입니다.'"></p>
+        <div th:unless="${infos}==null">
+            <div th:each="info : ${infos}">
+            <p th:text="'종목명 : '+${info.getCode()}"></p>
+            <p th:text="'현재가 : $'+${info.getPrice()}"></p><br/>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+    <style>
+        .w3-allerta {
+            font-family: "Allerta Stencil", Sans-serif;
+        }
+    </style>
+
+    <title>주식 조회</title>
+    <meta charset="utf-8" />
+
+</head>
+<body>
+    <div class="w3-card-4" style="margin: auto; width: 60%" >
+        <div class="w3-container w3-blue-grey w3-allerta">
+            <p class="w3-xxlarge ">주식 가격 조회</p>
+        </div>
+
+    <p class="w3-allerta w3-text-black w3-medium" style="margin-left: 2%">종목 코드를 입력하세요 (ex : TSLA, AAPL)</p>
+        <p class="w3-allerta w3-text-black w3-small" style="margin-left: 2%">쉼표 입력시 다중 검색 가능</p>
+
+        <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="text" id="code">
+    <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge" id="btn">검색</button>
+
+    <div id="result" style="padding-top: 20px; margin-left: 5%"></div>
+    </div>
+</body>
+<script>
+
+    $('#btn').on('click', function () {
+        requestGet();
+    });
+
+       function requestGet() {
+           var code = $('#code').val();
+           if(code.trim()=="")
+               alert("종목코드를 입력해주십시오");
+           else {
+               $.ajax({
+                   type: 'GET',
+                   url: '/stock/' + code,
+                   contentType: 'charset=utf-8',
+               }).done(function (data) {
+                   $('#result').html(data);
+
+               }).fail(function (error) {
+                   alert(error);
+               });
+           }
+       }
+
+</script>
+</html>
