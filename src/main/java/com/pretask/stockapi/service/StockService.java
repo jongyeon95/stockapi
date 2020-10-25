@@ -18,6 +18,8 @@ public class StockService {
 
     @Autowired
     YahooApi api;
+
+    //현재 주식 가격
     public ArrayList<StockInfo> getStockPrice(String s) throws IOException {
         Map<String ,Stock> stocks=getStockInfo(s);
         if(stocks==null){
@@ -34,6 +36,7 @@ public class StockService {
         return list;
     }
 
+    //기간 중 최고가
     public BigDecimal HighPriceStock(String s) throws IOException {
         Stock stock=getStockPeriodInfo(s);
         BigDecimal highPrice=BigDecimal.valueOf(0);
@@ -53,7 +56,6 @@ public class StockService {
         s=s.toUpperCase();
         s=s.replaceAll(" " , "");
         String[] stocks=s.split(",");
-
         return api.getStocks(stocks);
     }
 

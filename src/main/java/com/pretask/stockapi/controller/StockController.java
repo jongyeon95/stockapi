@@ -23,7 +23,6 @@ public class StockController {
 
     @GetMapping("/stock/{value}")
     public String highPrice(@PathVariable String value, Model model) throws IOException {
-
         List<StockInfo> stocks=stockService.getStockPrice(value);
         if(stocks==null)
             return "stockInfo";

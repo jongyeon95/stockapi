@@ -1,5 +1,6 @@
 package com.pretask.stockapi.service;
 
+import com.pretask.stockapi.model.StockInfo;
 import org.springframework.stereotype.Service;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -23,18 +24,20 @@ public class YahooApi {
 //        return stock;
 //    }
     Map<String, Stock> getStocks(String[] s) throws IOException {
-        Map<String, Stock> stocks = YahooFinance.get(s);
-        return stocks;
+        return YahooFinance.get(s);
     }
 
     Stock getPeriodStock(String s) throws  IOException{
+        return getPeriodStock(s,-180);
+    }
+
+    Stock getPeriodStock(String s , int period) throws IOException{
         if(s.equals(""))
             return null;
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
-        from.add(Calendar.DATE, -180); // from 5 years ago
-        Stock stock=YahooFinance.get(s,from, to, Interval.DAILY);
-        return stock;
+        from.add(Calendar.DATE, period*-1); // from 5 years ago
+        return YahooFinance.get(s,from, to, Interval.DAILY);
     }
 
 }
