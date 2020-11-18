@@ -23,11 +23,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .and() // 로그인 설정
                 .formLogin()
-                .loginPage("/login")
+
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and() // 로그아웃 설정

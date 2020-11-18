@@ -7,6 +7,7 @@
             <div th:each="info : ${infos}">
             <p th:text="'종목명 : '+${info.getCode()}"></p>
             <p th:text="'현재가 : $'+${info.getPrice()}"></p><br/>
+                <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-large" id="btn">장바구니</button>
         </div>
     </div>
 </body>
