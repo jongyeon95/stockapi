@@ -1,5 +1,6 @@
 package com.pretask.stockapi.service;
 
+import com.pretask.stockapi.dto.UserDto;
 import com.pretask.stockapi.entity.User;
 import com.pretask.stockapi.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,22 @@ public class MemberService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void signUp(String username, String password){
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
+    public String signUp(UserDto userDto){
+        if (memberRepository.findByUsername(userDto.getUsername()).isPresent()){
+            return "equalName";
+        }
+        else if(memberRepository.findByEmail(userDto.getEmail()).isPresent()){
+            return "equalEmail";
+        }
+        User user= new User();
+        user.setEmail(userDto.getEmail());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRole("ROLE_USER");
         user.setCreatedTime(LocalDateTime.now());
         user.setUpdatedTime(LocalDateTime.now());
         memberRepository.save(user);
-        return;
+        return "success";
     }
 
     @Override

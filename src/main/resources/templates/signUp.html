@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+    <style>
+        .w3-allerta {
+            font-family: "Allerta Stencil", Sans-serif;
+        }
+    </style>
+
+    <title>주식 조회</title>
+    <meta charset="utf-8" />
+
+</head>
+<body>
+<div class="w3-card-4" style="margin: auto; width: 60%" >
+    <div class="w3-container w3-blue-grey w3-allerta">
+        <p class="w3-xxlarge ">회원 가입</p>
+    </div>
+
+    <p class="w3-xlarge ">아이디</p>
+    <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="text" id="username">
+    <p class="w3-xlarge ">이메일</p>
+    <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="email" id="email">
+    <p class="w3-xlarge ">비밀번호</p>
+    <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="text" id="password">
+    <br/>
+    <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge" id="btn">회원가입</button>
+    <div id="result" style="padding-top: 20px; margin-left: 5%"></div>
+</div>
+</body>
+<script>
+
+    $('#btn').on('click', function () {
+        requestGet();
+    });
+
+    function requestGet() {
+        var data ={
+            username: $('#username').val().trim(),
+            email :$('#email').val().trim(),
+            password:$('#password').val().trim()
+        }
+
+        if(!data.username||!data.email||!data.password)
+            alert("모든 항목을 입력해주십시오");
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/signUp',
+                dataType:'text',
+                contentType: 'application/json',
+                data : JSON.stringify(data),
+            }).done(function (data) {
+
+               if(data=="equalName"){
+                   alert("중복된 아이디입니다.");
+               }
+               else if(data=="equalEmail"){
+                   alert("중복된 이메일입니다.");
+               }
+               else{
+                   alert("회원가입 성공");
+                   window.location.href="/";
+               }
+
+            }).fail(function (data,error) {
+                alert(data+" "+error);
+            });
+        }
+    }
+
+</script>
+</html>
