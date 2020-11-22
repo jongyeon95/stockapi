@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -8,6 +8,18 @@
         .w3-allerta {
             font-family: "Allerta Stencil", Sans-serif;
         }
+        header{
+            background-color: black;
+            text-align: right;
+            height: 30px;
+            margin-bottom: 30px;
+
+        }
+        header > a {
+            color: white;
+            font-size: 120%;
+            margin-right: 1%;
+        }
     </style>
 
     <title>주식 조회</title>
@@ -15,6 +27,12 @@
 
 </head>
 <body>
+    <header>
+            <a sec:authorize="isAnonymous()" href="/login">Login</a>
+            <a sec:authorize="isAnonymous()" href="/signUp">signUp</a>
+            <a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+    </header>
+    
     <div class="w3-card-4" style="margin: auto; width: 60%" >
         <div class="w3-container w3-blue-grey w3-allerta">
             <p class="w3-xxlarge ">주식 가격 조회</p>
