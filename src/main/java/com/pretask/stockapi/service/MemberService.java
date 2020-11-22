@@ -57,4 +57,14 @@ public class MemberService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(username,member.get().getPassword(),authorityList);
     }
+
+    public UserDto returnMemberInfo(String username){
+        Optional<User> user=memberRepository.findByUsername(username);
+        if(user.isPresent()){
+            UserDto userDto=new UserDto().builder().username(user.get().getUsername()).build();
+            return userDto;
+        }
+        return null;
+
+    }
 }

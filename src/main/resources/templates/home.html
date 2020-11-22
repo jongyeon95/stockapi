@@ -32,7 +32,7 @@
             <a sec:authorize="isAnonymous()" href="/signUp">signUp</a>
             <a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
     </header>
-    
+
     <div class="w3-card-4" style="margin: auto; width: 60%" >
         <div class="w3-container w3-blue-grey w3-allerta">
             <p class="w3-xxlarge ">주식 가격 조회</p>
@@ -43,7 +43,7 @@
 
         <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="text" id="code">
     <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge" id="btn">검색</button>
-
+        <div th:text="${member.getUsername()}"></div>
     <div id="result" style="padding-top: 20px; margin-left: 5%"></div>
     </div>
 </body>
