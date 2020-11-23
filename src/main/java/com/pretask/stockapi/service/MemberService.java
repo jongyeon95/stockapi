@@ -1,6 +1,7 @@
 package com.pretask.stockapi.service;
 
 import com.pretask.stockapi.dto.UserDto;
+import com.pretask.stockapi.entity.StockList;
 import com.pretask.stockapi.entity.User;
 import com.pretask.stockapi.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +67,12 @@ public class MemberService implements UserDetailsService {
             return userDto;
         }
         return null;
-
+    }
+    public Collection<StockList> returnStockList(String username){
+        Optional<User> user=memberRepository.findByUsername(username);
+        if(user.isPresent()){
+            return user.get().getStockList();
+        }
+        return null;
     }
 }

@@ -19,10 +19,11 @@ public class YahooApi {
     */
 
 
-//    Stock getSingleStock(String s) throws IOException {
-//        Stock stock= YahooFinance.get(s);
-//        return stock;
-//    }
+    Stock getSingleStock(String s) throws IOException {
+        Stock stock= YahooFinance.get(s);
+        return stock;
+    }
+
     Map<String, Stock> getStocks(String[] s) throws IOException {
         return YahooFinance.get(s);
     }

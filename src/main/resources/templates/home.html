@@ -43,7 +43,17 @@
 
         <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="text" id="code">
     <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge" id="btn">검색</button>
-        <div th:text="${member.getUsername()}"></div>
+        <div sec:authorize="isAuthenticated()" >
+            <p class="w3-allerta w3-text-black w3-medium">즐겨찾기</p>
+            <ul th:if="${stockList}!=null">
+            <li th:each=" list : ${stockList}">
+                <span th:text=" ${list.getCode()}">
+                </span>
+                <span th:text="${list.getPrice()}">
+                </span>
+            </li>
+            </ul>
+        </div>
     <div id="result" style="padding-top: 20px; margin-left: 5%"></div>
     </div>
 </body>

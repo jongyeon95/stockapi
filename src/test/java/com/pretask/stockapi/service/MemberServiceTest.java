@@ -16,7 +16,7 @@ public class MemberServiceTest {
     MemberService memberService;
     @Test
     public void signUp() {
-        memberService.signUp("1234","1234");
+
 
     }
 }

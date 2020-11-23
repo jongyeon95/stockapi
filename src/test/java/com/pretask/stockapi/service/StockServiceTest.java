@@ -1,6 +1,10 @@
 package com.pretask.stockapi.service;
 
+import com.pretask.stockapi.entity.StockList;
+import com.pretask.stockapi.entity.User;
 import com.pretask.stockapi.model.StockInfo;
+import com.pretask.stockapi.repository.MemberRepository;
+import com.pretask.stockapi.repository.StockListRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import yahoofinance.Stock;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -22,6 +27,13 @@ public class StockServiceTest {
 
     @Autowired
     private StockService stockService;
+
+    @Autowired
+    private StockListRepository stockListRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
 
     @Test
     public void highPriceStock() throws IOException {
@@ -81,6 +93,21 @@ public class StockServiceTest {
 
         assertThat(stock1.getName(),equalTo(stock3.getName()));
         assertThat(stock1.getName(),equalTo(stock4.getName()));
+
+    }
+
+    @Test
+    public void test2(){
+
+
+        StockList stockList=new StockList();
+        stockList.setStockName("AA");
+        stockList.setUserId(1L);
+        stockListRepository.save(stockList);
+
+        Optional<User> user=memberRepository.findByUsername("1234");
+        System.out.println(user.get().getStockList());
+
 
     }
 }

@@ -59,6 +59,15 @@ public class StockService {
         return api.getStocks(stocks);
     }
 
+    public StockInfo getSingleStockInfo(String s) throws  IOException{
+       Stock stock = api.getSingleStock(s);
+       StockInfo stockInfo=new StockInfo().builder()
+               .code(stock.getSymbol())
+               .price(stock.getQuote().getPrice())
+               .build();
+       return stockInfo;
+    }
+
     //180일 기간의 주식정보 가져오기
     public Stock getStockPeriodInfo(String s) throws IOException {
         s=s.replaceAll(" " , "");

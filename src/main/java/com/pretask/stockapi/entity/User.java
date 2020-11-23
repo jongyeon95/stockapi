@@ -2,12 +2,11 @@ package com.pretask.stockapi.entity;
 
 
 import lombok.Data;
+import yahoofinance.Stock;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -34,5 +33,9 @@ public class User {
 
     @Column(nullable = false)
     private LocalDateTime updatedTime;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
+    private Collection<StockList> stockList;
 
 }
