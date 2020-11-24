@@ -33,7 +33,7 @@
             <a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
     </header>
 
-    <div class="w3-card-4" style="margin: auto; width: 60%" >
+    <div class="w3-card-4" style=" width: 60%; margin-left: 5%" >
         <div class="w3-container w3-blue-grey w3-allerta">
             <p class="w3-xxlarge ">주식 가격 조회</p>
         </div>
@@ -43,18 +43,19 @@
 
         <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="text" id="code">
     <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge" id="btn">검색</button>
-        <div sec:authorize="isAuthenticated()" >
-            <p class="w3-allerta w3-text-black w3-medium">즐겨찾기</p>
-            <ul th:if="${stockList}!=null">
+    <div id="result" style="padding-top: 20px; margin-left: 5%"></div>
+    </div>
+    <div sec:authorize="isAuthenticated()" class="w3-card-4" style="width: 20%; position: fixed; right: 20px; top: 50px" >
+
+        <p class="w3-allerta w3-text-black w3-medium" style="padding-left: 20px">즐겨찾기</p>
+        <ul th:if="${stockList}!=null">
             <li th:each=" list : ${stockList}">
                 <span th:text=" ${list.getCode()}">
                 </span>
                 <span th:text="${list.getPrice()}">
                 </span>
             </li>
-            </ul>
-        </div>
-    <div id="result" style="padding-top: 20px; margin-left: 5%"></div>
+        </ul>
     </div>
 </body>
 <script>
