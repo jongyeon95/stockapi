@@ -3,6 +3,8 @@ package com.pretask.stockapi.repository;
 import com.pretask.stockapi.entity.StockList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StockListRepository extends JpaRepository<StockList,Long> {
+import java.util.Optional;
 
+public interface StockListRepository extends JpaRepository<StockList,Long> {
+Optional<StockList> findByUserId(Long id);
 }
