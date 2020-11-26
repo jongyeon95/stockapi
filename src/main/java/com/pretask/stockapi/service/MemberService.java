@@ -3,7 +3,9 @@ package com.pretask.stockapi.service;
 import com.pretask.stockapi.dto.UserDto;
 import com.pretask.stockapi.entity.StockList;
 import com.pretask.stockapi.entity.User;
+import com.pretask.stockapi.model.StockInfo;
 import com.pretask.stockapi.repository.MemberRepository;
+import com.pretask.stockapi.repository.StockListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,12 +15,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yahoofinance.Stock;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MemberService implements UserDetailsService {
@@ -27,7 +28,13 @@ public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
 
     @Autowired
+    private StockListRepository stockListRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private StockService stockService;
 
     @Transactional
     public String signUp(UserDto userDto){
@@ -63,7 +70,7 @@ public class MemberService implements UserDetailsService {
     public UserDto returnMemberInfo(String username){
         Optional<User> user=memberRepository.findByUsername(username);
         if(user.isPresent()){
-            UserDto userDto=new UserDto().builder().username(user.get().getUsername()).build();
+            UserDto userDto=new UserDto().builder().username(user.get().getUsername()).email(user.get().getEmail()).build();
             return userDto;
         }
         return null;
@@ -74,5 +81,24 @@ public class MemberService implements UserDetailsService {
             return user.get().getStockList();
         }
         return null;
+    }
+
+    public void addFastStockList(String username, String code) throws IOException {
+        Optional<User> user=memberRepository.findByUsername(username);
+        if(user.isPresent()){
+            Map<String ,Stock> stocks=stockService.getStockInfo(code);
+            if(stocks==null){
+                return;
+            }
+            ArrayList<String> list= new ArrayList<>();
+            for(Stock value : stocks.values()){
+                Stock stock=value;
+                StockList stockList=new StockList();
+                stockList.setStockName(stock.getSymbol());
+                stockList.setUserId(user.get().getId());
+                stockListRepository.save(stockList);
+            }
+        }
+        return;
     }
 }

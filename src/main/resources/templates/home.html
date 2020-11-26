@@ -48,6 +48,8 @@
     <div sec:authorize="isAuthenticated()" class="w3-card-4" style="width: 20%; position: fixed; right: 20px; top: 50px" >
 
         <p class="w3-allerta w3-text-black w3-medium" style="padding-left: 20px">즐겨찾기</p>
+        <input class="w3-white w3-border w3-border-blue-grey w3-round-xlarge" style="margin-left: 2%" type="text" id="fast_code">
+        <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge" id="fast_btn">추가</button>
         <ul th:if="${stockList}!=null">
             <li th:each=" list : ${stockList}">
                 <span th:text=" ${list.getCode()}">
@@ -58,11 +60,38 @@
         </ul>
     </div>
 </body>
-<script>
+<script th:inline="javascript">
 
     $('#btn').on('click', function () {
         requestGet();
     });
+
+    $('#fast_btn').on('click', function () {
+        addFastCode();
+    });
+
+    function addFastCode() {
+        var data={
+            code : $('#fast_code').val(),
+            username : [[${user}]],
+        };
+        console.log("action");
+        if(data.code.trim()=="")
+            alert("종목코드를 입력해주십시오");
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/fastStock',
+                contentType:'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+            }).done(function (data) {
+                alert("success");
+                window.location.href="/";
+            }).fail(function (error) {
+                alert(error);
+            });
+        }
+    }
 
        function requestGet() {
            var code = $('#code').val();
@@ -73,6 +102,7 @@
                    type: 'GET',
                    url: '/stock/' + code,
                    contentType: 'charset=utf-8',
+
                }).done(function (data) {
                    $('#result').html(data);
 

@@ -1,5 +1,6 @@
 package com.pretask.stockapi.controller;
 
+import com.pretask.stockapi.dto.UserDto;
 import com.pretask.stockapi.entity.StockList;
 import com.pretask.stockapi.model.StockInfo;
 import com.pretask.stockapi.service.MemberService;
@@ -28,15 +29,18 @@ public class homeController {
     @GetMapping("/")
     public String home(HttpServletRequest req, Model model) throws IOException {
         Collection<StockList> stockList=null;
+        UserDto userDto=null;
         ArrayList<StockInfo> list=new ArrayList<>();
         if(req.isUserInRole("ROLE_USER")) {
             stockList = memberService.returnStockList(req.getRemoteUser());
-
+            userDto = memberService.returnMemberInfo(req.getRemoteUser());
+            System.out.println(userDto);
             for (StockList temp : stockList) {
                 list.add((StockInfo) stockService.getSingleStockInfo(temp.getStockName()));
             }
         }
         model.addAttribute("stockList",list);
+        model.addAttribute("user",userDto);
         return "home";
     }
 }
