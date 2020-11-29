@@ -56,6 +56,7 @@
                 </span>
                 <span th:text="${list.getPrice()}">
                 </span>
+                <button class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge" th:onclick='deletedStock([[${list.getCode()}]],[[${user.getUsername()}]])'>삭제</button>
             </li>
         </ul>
     </div>
@@ -69,6 +70,10 @@
     $('#fast_btn').on('click', function () {
         addFastCode();
     });
+
+    function deletedStock(stockName,username) {
+        alert(stockName+"  "+username);
+    }
 
     function addFastCode() {
         var data={
