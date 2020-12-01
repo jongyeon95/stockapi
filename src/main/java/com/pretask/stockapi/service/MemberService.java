@@ -101,4 +101,16 @@ public class MemberService implements UserDetailsService {
         }
         return;
     }
+    public void deleteFastStock(String stockName, String username){
+        Optional<User> user=memberRepository.findByUsername(username);
+
+        if(user.isPresent()){
+            Optional<StockList> stock=stockListRepository.findByUserIdAndAndStockName(user.get().getId(),stockName);
+            if(stock.isPresent()){
+                stockListRepository.delete(stock.get());
+                return;
+            }
+        }
+        return;
+    }
 }

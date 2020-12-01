@@ -19,6 +19,8 @@ public class StockService {
     @Autowired
     YahooApi api;
 
+
+
     //현재 주식 가격
     public ArrayList<StockInfo> getStockPrice(String s) throws IOException {
         Map<String ,Stock> stocks=getStockInfo(s);
@@ -73,4 +75,6 @@ public class StockService {
         s=s.replaceAll(" " , "");
         return api.getPeriodStock(s);
     }
+
+
 }

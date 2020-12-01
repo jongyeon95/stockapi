@@ -72,7 +72,19 @@
     });
 
     function deletedStock(stockName,username) {
-        alert(stockName+"  "+username);
+
+        $.ajax({
+            type: 'DELETE',
+            url: 'stock/delete/'+"?stock="+stockName+"&user="+username,
+            contentType:'application/json; charset=utf-8',
+
+        }).done(function (data) {
+            alert("success");
+            window.location.href="/";
+        }).fail(function (error) {
+            alert(error);
+        });
+
     }
 
     function addFastCode() {
@@ -80,7 +92,6 @@
             code : $('#fast_code').val(),
             username : [[${user}]],
         };
-        console.log("action");
         if(data.code.trim()=="")
             alert("종목코드를 입력해주십시오");
         else {
